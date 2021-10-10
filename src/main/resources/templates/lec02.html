@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Janken</title>
+</head>
+
+<body>
+  <h1>Lec02 GET!</h1>
+  <div th:if="${name}">
+    Hi [[${name}]]
+  </div>
+  <p>
+  <div>
+    (Sample2-3)
+    <a href="/lec02janken?hand=Gu">ぐー</a>
+    <a href="/lec02janken?hand=Choki">ちょき</a>
+    <a href="/lec02janken?hand=Pa">ぱー</a>
+  </div>
+  <div th:if="${hand}">
+    あなたの手 [[${hand}]]
+    <div th:if="${cpu}">
+      相手の手 [[${cpu}]]
+    </div>
+    <div th:if="${Win}">
+      結果 [[${Win}]]
+    </div>
+    <div th:if="${Lose}">
+      結果 [[${Lose}]]
+    </div>
+    <div th:if="${Draw}">
+      結果 [[${Draw}]]
+    </div>
+  </div>
+  </p>
+</body>
+
+</html>
