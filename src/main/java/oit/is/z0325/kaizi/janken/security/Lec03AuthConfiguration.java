@@ -21,6 +21,8 @@ public class Lec03AuthConfiguration extends WebSecurityConfigurerAdapter {
     // $ sshrun htpasswd -nbBC 10 user2 ttp
     auth.inMemoryAuthentication().withUser("user2")
         .password("$2y$10$TbzEKu7LOpEdGz.DPyQB.uIxcVicqqoxq4FQsF0zxBqqguMxy1rvq").roles("USER");
+
+    auth.inMemoryAuthentication().withUser("ほんだ").password(passwordEncoder().encode("p@ss")).roles("USER");
   }
 
   @Bean
@@ -33,6 +35,8 @@ public class Lec03AuthConfiguration extends WebSecurityConfigurerAdapter {
     http.formLogin();
     http.authorizeRequests().antMatchers("/lec02/**").authenticated();
     http.logout().logoutSuccessUrl("/");
+    http.csrf().disable();
+    http.headers().frameOptions().disable();
   }
 
 }
