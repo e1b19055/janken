@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8">
+  <title>Janken</title>
+</head>
+
+<body>
+  <h1>ユーザー情報</h1>
+
+  <p>
+    自身のユーザー名
+  <div sec:authentication="name"></div>
+  </p>
+
+  相手のユーザー名
+  <p th:if="${user}">
+    [[${user.name}]]
+  </p>
+
+  <p>
+  <div>
+    じゃんけん
+    <a href="/matchjanken?hand=Gu">ぐー</a>
+    <a href="/matchjanken?hand=Choki">ちょき</a>
+    <a href="/matchjanken?hand=Pa">ぱー</a>
+  </div>
+  <div th:if="${hand}">
+    あなたの手 [[${hand}]]
+    <div th:if="${cpu}">
+      相手の手 [[${cpu}]]
+    </div>
+    <div th:if="${Win}">
+      結果 [[${Win}]]
+    </div>
+    <div th:if="${Lose}">
+      結果 [[${Lose}]]
+    </div>
+    <div th:if="${Draw}">
+      結果 [[${Draw}]]
+    </div>
+  </div>
+  </p>
+
+  <div><a href="/lec02">もどる</a></div>
+</body>
+
+</html>

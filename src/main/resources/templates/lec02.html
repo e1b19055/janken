@@ -33,12 +33,32 @@
   </div>
   </p>
 
+  <p th:if="${matches}">
+  <div th:each="match,stat:${matches}">
+    <tr>
+      <td>ID:[[${match.id}]]</td>
+      <td>ユーザ1ID:[[${match.user1}]]</td>
+      <td>ユーザ2ID:[[${match.user2}]]</td>
+      <td>ユーザ1の手:[[${match.user1Hand}]]</td>
+      <td>ユーザ2の手:[[${match.user2Hand}]]</td>
+    </tr>
+  </div>
+  </p>
+
+  エントリー
   <div th:if="${entry}">
-    エントリー
     <ul>
       <li th:each="user : ${entry.users}">[[${user}]]</li>
     </ul>
   </div>
+  <p th:if="${users}">
+  <div th:each="user,stat:${users}">
+    <tr>
+      <td>ID:[[${user.id}]]</td>
+      <td>ユーザ名:<a th:href="@{/match(id=${user.id})}">[[${user.name}]]</a></td>
+    </tr>
+  </div>
+  </p>
 
   <div><a href="/logout">ログアウト</a></div>
 </body>
