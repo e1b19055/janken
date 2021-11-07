@@ -7,32 +7,33 @@
 </head>
 
 <body>
+  <div><a href='/logout'>ログアウト</a></div>
   <h1>Lec02 GET!</h1>
-  ユーザー名 <div sec:authentication="name"></div>
-  <p>
-  <div>
-    じゃんけん
-    <a href="/lec02janken?hand=Gu">ぐー</a>
-    <a href="/lec02janken?hand=Choki">ちょき</a>
-    <a href="/lec02janken?hand=Pa">ぱー</a>
-  </div>
-  <div th:if="${hand}">
-    あなたの手 [[${hand}]]
-    <div th:if="${cpu}">
-      相手の手 [[${cpu}]]
-    </div>
-    <div th:if="${Win}">
-      結果 [[${Win}]]
-    </div>
-    <div th:if="${Lose}">
-      結果 [[${Lose}]]
-    </div>
-    <div th:if="${Draw}">
-      結果 [[${Draw}]]
-    </div>
+  Hi <span sec:authentication="name"></span>
+
+  <h2>エントリー</h2>
+  <p th:if="${users}">
+  <div th:each="user,stat:${users}">
+    <tr>
+      <td>ID:[[${user.id}]]</td>
+      <td>ユーザ名:<a th:href="@{/match(id=${user.id})}">[[${user.name}]]</a></td>
+    </tr>
   </div>
   </p>
 
+  <h2>アクティブな試合</h2>
+  <p th:if="${actives}">
+  <div th:each="active,stat:${actives}">
+    <tr>
+      <td>ID:[[${active.id}]]</td>
+      <td>ユーザ1ID:[[${active.user1}]]</td>
+      <td>ユーザ2ID:[[${active.user2}]]</td>
+      <td>isActive:[[${active.isActive}]]</td>
+    </tr>
+  </div>
+  </p>
+
+  <h2>試合結果</h2>
   <p th:if="${matches}">
   <div th:each="match,stat:${matches}">
     <tr>
@@ -45,22 +46,6 @@
   </div>
   </p>
 
-  エントリー
-  <div th:if="${entry}">
-    <ul>
-      <li th:each="user : ${entry.users}">[[${user}]]</li>
-    </ul>
-  </div>
-  <p th:if="${users}">
-  <div th:each="user,stat:${users}">
-    <tr>
-      <td>ID:[[${user.id}]]</td>
-      <td>ユーザ名:<a th:href="@{/match(id=${user.id})}">[[${user.name}]]</a></td>
-    </tr>
-  </div>
-  </p>
-
-  <div><a href="/logout">ログアウト</a></div>
 </body>
 
 </html>
