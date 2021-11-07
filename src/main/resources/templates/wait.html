@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8">
+  <title>Janken</title>
+  <script>
+    window.onload = function () {
+      var sse = new EventSource('/wait');
+      sse.onmessage = function (event) {
+        console.log("sse.onmessage")
+        console.log(event.data);
+        var matchs = JSON.parse(event.data);//JSONオブジェクトとしてparse
+        var kekka = "<h2>試合結果</h2>";
+        var bgn_tr = "<tr>";
+        var end_tr = "</tr>";
+        var idx = "<td>ID:" + matchs.id + " </td>";
+        var f_user1 = "<td>ユーザ1ID:" + matchs.user1 + " </td>";
+        var f_user2 = "<td>ユーザ2ID:" + matchs.user2 + " </td>";
+        var f_user1Hand = "<td>ユーザ1の手:" + matchs.user1Hand + " </td>";
+        var f_user2Hand = "<td>ユーザ2の手:" + matchs.user2Hand + " </td>";
+        var bag = "<p><a href='/match?id=" + matchs.user2 + "'>もどる</a></p>";
+        kekka = kekka + bgn_tr + idx + f_user1 + f_user2 + f_user1Hand + f_user2Hand + bag + end_tr;
+        console.log(kekka);
+        var p = document.getElementById("kekkas");
+        p.innerHTML = kekka;
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <h1>相手の手を待っています</h1>
+  Hi <span sec:authentication="name"></span>
+
+  <p id=kekkas>
+  <div th:if="${matches}">
+    <h2>試合結果</h2>
+    <div th:each="match,stat:${matches}">
+      <tr>
+        <td>ID:[[${match.id}]]</td>
+        <td>ユーザ1ID:[[${match.user1}]]</td>
+        <td>ユーザ2ID:[[${match.user2}]]</td>
+        <td>ユーザ1の手:[[${match.user1Hand}]]</td>
+        <td>ユーザ2の手:[[${match.user2Hand}]]</td>
+      </tr>
+    </div>
+    <a href="@{/match(id=${match.user2})}">もどる</a>
+  </div>
+  </p>
+
+</body>
+
+</html>
